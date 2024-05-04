@@ -76,10 +76,6 @@ const images = [
     linkElement.classList.add("gallery-link");
     linkElement.href = elem.original;
 
-    linkElement.addEventListener("click", event => {
-        event.preventDefault();
-      });
-
     liElement.append(linkElement);
 
     const imgElement = document.createElement("img");
@@ -89,13 +85,6 @@ const images = [
     imgElement.alt = elem.description;
     linkElement.append(imgElement);
 
-    const instance = basicLightbox.create(`
-	<img src="${imgElement.dataset.source}" width="1112" height="640">`)
-
-    imgElement.addEventListener("click", (event) => {
-        instance.show();
-    })
-
     arry.push(liElement);
   }
 
@@ -103,7 +92,13 @@ const images = [
 
  gallery.addEventListener("click", (event) => {
     if(event.target.nodeName == "IMG") {
+        event.preventDefault();
         console.log(event.target.dataset.source);
+
+        const instance = basicLightbox.create(`
+        <img src="${event.target.dataset.source}" width="1112" height="640">`);
+
+        instance.show();
     } 
  })
   
